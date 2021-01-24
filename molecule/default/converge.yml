@@ -24,4 +24,4 @@
   tasks:
     - name: install docker
       include_role:
-        - name: joshuaejs.docker
+        name: joshuaejs.docker
