@@ -1,0 +1,11 @@
+---
+# vars file for docker
+
+# docker release 'stable' or 'test'
+docker_apt_release: test
+
+# hardware architecture 'amd64' or 'arm64'
+docker_apt_arch: amd64
+
+# override default storage driver
+docker_storage_driver: overlay2

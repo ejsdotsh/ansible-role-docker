@@ -1,0 +1,7 @@
+---
+- name: ensure docker users are members of the docker group
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: true
+  with_items: "{{ docker_users }}"

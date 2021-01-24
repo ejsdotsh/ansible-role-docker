@@ -1,0 +1,5 @@
+{
+  "storage-driver": "{{ docker_storage_driver }}",
+  "ipv6": {{ docker_ipv6|default(false) }},
+  "fixed-cidr-v6": "{{ ipv6_cidr }}"
+}

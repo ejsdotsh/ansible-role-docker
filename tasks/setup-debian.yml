@@ -1,0 +1,46 @@
+---
+- name: ensure old versions are uninstalled
+  apt:
+    name:
+      - docker
+      - docker-engine
+      - docker.io
+      - containerd
+      - runc
+      - docker-ce
+      - docker-ce-cli
+    state: absent
+    purge: yes
+    force_apt_get: yes
+
+- name: https install dependencies
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+    state: latest
+    update_cache: true
+    force_apt_get: yes
+
+- name: apt docker repo gpg key
+  apt_key:
+    url: "{{ docker_apt_gpg_key }}"
+    state: present
+  register: add_repo_key
+  ignore_errors: "{{ docker_apt_ignore_key_error }}"
+
+- name: add docker repo key (alternative method)
+  shell: >
+    curl -fsSL {{ docker_apt_gpg_key }} | sudo apt-key add -
+  args:
+    warn: false
+  when: add_repo_key is failed
+
+- name: add docker repo
+  apt_repository:
+    repo: "{{ docker_apt_repo }}"
+    state: present
+    update_cache: true

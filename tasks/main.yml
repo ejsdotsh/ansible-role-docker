@@ -1,0 +1,31 @@
+---
+# tasks file for docker
+- name: get needed facts
+  setup:
+    gather_subset:
+      - min
+
+- include_tasks: setup-debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: install docker
+  package:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose
+    state: present
+  notify: restart docker
+
+- name: start and enable docker at boot
+  service:
+    name: docker
+    state: "{{ docker_service|default(started) }}"
+    enabled: "{{ docker_service_enabled|default(true) }}"
+
+- name: flush handlers
+  meta: flush_handlers
+
+- include_tasks: docker-users.yml
+  when: docker_users | length > 0
