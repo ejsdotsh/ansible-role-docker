@@ -9,3 +9,12 @@ docker_apt_arch: amd64
 
 # override default storage driver
 docker_storage_driver: overlay2
+
+# custom network
+docker_network_name: "{{ docker_network_name|default(party) }}"
+docker_ipv6: "{{ docker_ipv6 }}"
+docker_ip4_net: "{{ docker_ip4_net }}"
+docker_ip6_net: "{{ docker_ip6_net }}"
+
+# a list of docker users
+docker_users: []

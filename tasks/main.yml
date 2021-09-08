@@ -1,7 +1,7 @@
 ---
 # tasks file for docker
 - name: get needed facts
-  setup:
+  ansible.builtin.setup:
     gather_subset:
       - min
 
@@ -9,7 +9,7 @@
   when: ansible_os_family == 'Debian'
 
 - name: install docker
-  package:
+  ansible.builtin.package:
     name:
       - docker-ce
       - docker-ce-cli
@@ -19,13 +19,23 @@
   notify: restart docker
 
 - name: start and enable docker at boot
-  service:
+  ansible.builtin.service:
     name: docker
     state: "{{ docker_service|default(started) }}"
     enabled: "{{ docker_service_enabled|default(true) }}"
 
 - name: flush handlers
   meta: flush_handlers
+
+- name: create local network
+  community.docker.docker_network:
+    name: "{{ docker_network_name }}"
+    enable_ipv6: "{{ docker_ipv6|default(no) }}"
+    internal: yes
+    ipam_config:
+      - subnet: "{{ docker_ip4_net }}"
+
+
 
 - include_tasks: docker-users.yml
   when: docker_users | length > 0
