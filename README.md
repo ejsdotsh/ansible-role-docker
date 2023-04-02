@@ -1,3 +1,7 @@
+## **unmaintained**
+
+*this role's functions have been re-added to [system-builder](https://github.com/ejsdotsh/system-builder)*
+
 Ansible Role: Docker
 ====================
 
@@ -54,7 +58,7 @@ this role is heavily modeled on [geerlingguy.docker](https://github.com/geerling
   hosts: all
   tasks:
     include_role:
-      name: joshuaejs.docker
+      name: ejsdotsh.docker
     vars:
       # override default storage driver
       docker_storage_driver: zfs
@@ -70,4 +74,4 @@ MIT
 Author Information
 ------------------
 
-this role was created in 2020 by [joshuaejs](https://github.com/joshuaejs)
+this role was created in 2020 by [ejsdotsh](https://github.com/ejsdotsh)
